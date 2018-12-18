@@ -15,9 +15,9 @@ module.exports = async (
         name: 'devDeps',
         message: 'Choose dev dependencies',
         choices: [
-          {title: 'ESLint', value: 'eslint', selected: false},
-          {title: 'Jest', value: 'jest', selected: false},
-          {title: 'Prettier', value: 'prettier', selected: false},
+          {title: 'ESLint', value: 'eslint', selected: true},
+          {title: 'Jest', value: 'jest', selected: true},
+          {title: 'Prettier', value: 'prettier', selected: true},
         ],
       },
     ],
@@ -42,6 +42,6 @@ module.exports = async (
     template({name, description}),
     dest()
   )
-  await install()
+  await install(devDeps, {dev: true})
   await gitInit()
 }
