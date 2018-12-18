@@ -7,3 +7,7 @@ A Node package generator.
 ```bash
 npx gogen gogen-npm mylib
 ```
+
+## Related
+
+- [gogen](https://github.com/ambar/gogen)
