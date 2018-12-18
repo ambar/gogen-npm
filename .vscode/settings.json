@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    ".babelrc.t": "json",
+    ".gitignore.t": "ignore",
+    "*.md.t": "markdown"
+  }
+}

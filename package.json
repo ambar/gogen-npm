@@ -1,0 +1,32 @@
+{
+  "name": "gogen-npm",
+  "version": "0.0.1",
+  "description": "A Node package generator",
+  "repository": "ambar/gogen-npm",
+  "license": "MIT",
+  "files": [
+    ".gogenrc.js",
+    "template"
+  ],
+  "scripts": {
+    "prepare": "npm test",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch --notify"
+  },
+  "keywords": [
+    "generator",
+    "package",
+    "gogen"
+  ],
+  "jest": {
+    "modulePathIgnorePatterns": [
+      "/dist/",
+      "/template/"
+    ]
+  },
+  "devDependencies": {
+    "gogen": "^0.0.5",
+    "jest": "^23.6.0"
+  }
+}
