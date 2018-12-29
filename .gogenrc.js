@@ -36,6 +36,8 @@ module.exports = async (
   await pipeline(
     src(['template/**', !useJest && '!**/test/**'].filter(n => n)),
     packages(pkg => {
+      pkg.files = ['lib']
+
       if (useJest) {
         pkg.scripts = {
           ...pkg.scripts,
@@ -63,7 +65,6 @@ module.exports = async (
       return {
         ...pkg,
         description,
-        files: ['lib'],
       }
     }),
     template({name, description, username}),
