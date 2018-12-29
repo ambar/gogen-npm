@@ -4,10 +4,10 @@ exports[`template creates with defaults 1`] = `
 Array [
   ".gitignore",
   ".prettierrc.js",
+  "LICENSE",
   "README.md",
   "lib/index.js",
   "package.json",
-  "test/index.spec.js",
 ]
 `;
 
@@ -19,6 +19,7 @@ Object {
   ],
   "license": "MIT",
   "name": "dist",
+  "scripts": Object {},
   "version": "0.0.0",
 }
 `;
@@ -38,5 +39,52 @@ Object {
     "test:watch": "jest --watch --notify",
   },
   "version": "0.0.0",
+}
+`;
+
+exports[`template creates with xo & jest 1`] = `
+Object {
+  "description": "superb",
+  "files": Array [
+    "lib",
+  ],
+  "license": "MIT",
+  "name": "dist",
+  "scripts": Object {
+    "lint": "xo",
+    "prepare": "xo && npm test",
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch --notify",
+  },
+  "version": "0.0.0",
+  "xo": Object {
+    "envs": Array [
+      "node",
+      "jest",
+    ],
+    "prettier": true,
+    "space": true,
+  },
+}
+`;
+
+exports[`template creates with xo 1`] = `
+Object {
+  "description": "superb",
+  "files": Array [
+    "lib",
+  ],
+  "license": "MIT",
+  "name": "dist",
+  "scripts": Object {
+    "lint": "xo",
+    "prepare": "xo",
+  },
+  "version": "0.0.0",
+  "xo": Object {
+    "prettier": true,
+    "space": true,
+  },
 }
 `;

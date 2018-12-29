@@ -1,3 +1,9 @@
+const {execSync} = require('child_process')
+const sh = cmd =>
+  execSync(cmd)
+    .toString()
+    .trim()
+
 module.exports = async (
   {src, dest, pipeline, packages, template},
   {name, install, gitInit, prompts}
@@ -15,31 +21,52 @@ module.exports = async (
         name: 'devDeps',
         message: 'Choose dev dependencies',
         choices: [
-          {title: 'ESLint', value: 'eslint', selected: true},
-          {title: 'Jest', value: 'jest', selected: true},
-          {title: 'Prettier', value: 'prettier', selected: true},
+          {title: 'XO', value: 'xo', selected: false},
+          {title: 'Jest', value: 'jest', selected: false},
         ],
       },
     ],
     {onCancel: process.exit}
   )
 
+  const useXO = devDeps.includes('xo')
   const useJest = devDeps.includes('jest')
+  const username = sh('git config user.name')
+
   await pipeline(
-    src('template/**'),
-    packages({
-      description,
-      files: ['lib'],
-      ...(useJest && {
-        scripts: {
+    src(['template/**', !useJest && '!**/test/**'].filter(n => n)),
+    packages(pkg => {
+      if (useJest) {
+        pkg.scripts = {
+          ...pkg.scripts,
           prepare: 'npm test',
           test: 'jest',
           'test:coverage': 'jest --coverage',
           'test:watch': 'jest --watch --notify',
-        },
-      }),
+        }
+      }
+      if (useXO) {
+        pkg = {
+          ...pkg,
+          scripts: {
+            ...pkg.scripts,
+            prepare: useJest ? ['xo', pkg.scripts.prepare].join(' && ') : 'xo',
+            lint: 'xo',
+          },
+          xo: {
+            ...(useJest && {envs: ['node', 'jest']}),
+            space: true,
+            prettier: true,
+          },
+        }
+      }
+      return {
+        ...pkg,
+        description,
+        files: ['lib'],
+      }
     }),
-    template({name, description}),
+    template({name, description, username}),
     dest()
   )
   await install(devDeps, {dev: true})

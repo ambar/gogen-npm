@@ -24,4 +24,24 @@ describe('template', () => {
     })
     expect(JSON.parse(readFile('package.json'))).toMatchSnapshot()
   })
+
+  it('creates with xo', async () => {
+    const {readFile} = await mock('.', directory, {
+      answers: {
+        ...answers,
+        devDeps: ['xo'],
+      },
+    })
+    expect(JSON.parse(readFile('package.json'))).toMatchSnapshot()
+  })
+
+  it('creates with xo & jest', async () => {
+    const {readFile} = await mock('.', directory, {
+      answers: {
+        ...answers,
+        devDeps: ['xo', 'jest'],
+      },
+    })
+    expect(JSON.parse(readFile('package.json'))).toMatchSnapshot()
+  })
 })
