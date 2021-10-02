@@ -2,9 +2,7 @@
 
 exports[`template creates with defaults 1`] = `
 Array [
-  ".eslintrc.js",
   ".gitignore",
-  ".prettierrc.js",
   "LICENSE",
   "README.md",
   "lib/index.js",
@@ -74,7 +72,7 @@ Object {
   "scripts": Object {
     "lint": "recommended",
     "lint:fix": "recommended --fix",
-    "prepare": "npm run lint && ",
+    "prepare": "npm run lint",
   },
   "version": "0.0.0",
 }

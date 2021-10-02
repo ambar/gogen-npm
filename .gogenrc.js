@@ -2,8 +2,8 @@ const {execSync} = require('child_process')
 const sh = (cmd) => execSync(cmd).toString().trim()
 
 module.exports = async (
-  {src, dest, pipeline, packages, template},
-  {name, install, gitInit, prompts}
+  {src, dest, pipeline, packages, template, install, gitInit, prompts},
+  {name}
 ) => {
   const {description, devDeps} = await prompts(
     [
@@ -35,10 +35,15 @@ module.exports = async (
   const username = sh('git config user.name')
 
   await pipeline(
-    src(['template/**', !useJest && '!**/test/**'].filter((n) => n)),
+    src(
+      [
+        'template/**',
+        !useJest && '!**/test/**',
+        !useRecommended && '!**/.{eslintrc,prettierrc}.js',
+      ].filter(Boolean)
+    ),
     packages((pkg) => {
       pkg.files = ['lib']
-
       if (useJest) {
         pkg.scripts = {
           ...pkg.scripts,
@@ -51,10 +56,9 @@ module.exports = async (
       if (useRecommended) {
         pkg.scripts = {
           ...pkg.scripts,
-          prepare: [
-            'npm run lint',
-            ...[useJest ? pkg.scripts.prepare : []],
-          ].join(' && '),
+          prepare: ['npm run lint', pkg.scripts.prepare]
+            .filter(Boolean)
+            .join(' && '),
           lint: 'recommended',
           'lint:fix': 'recommended --fix',
         }
