@@ -51,21 +51,14 @@ Object {
   "license": "MIT",
   "name": "dist",
   "scripts": Object {
-    "lint": "xo",
-    "prepare": "xo && npm test",
+    "lint": "recommended",
+    "lint:fix": "recommended --fix",
+    "prepare": "npm run lint && npm test",
     "test": "jest",
     "test:coverage": "jest --coverage",
     "test:watch": "jest --watch --notify",
   },
   "version": "0.0.0",
-  "xo": Object {
-    "envs": Array [
-      "node",
-      "jest",
-    ],
-    "prettier": true,
-    "space": true,
-  },
 }
 `;
 
@@ -78,13 +71,10 @@ Object {
   "license": "MIT",
   "name": "dist",
   "scripts": Object {
-    "lint": "xo",
+    "lint": "recommended",
+    "lint:fix": "recommended --fix",
     "prepare": "xo",
   },
   "version": "0.0.0",
-  "xo": Object {
-    "prettier": true,
-    "space": true,
-  },
 }
 `;

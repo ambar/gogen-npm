@@ -1,8 +1,5 @@
 const {execSync} = require('child_process')
-const sh = cmd =>
-  execSync(cmd)
-    .toString()
-    .trim()
+const sh = (cmd) => execSync(cmd).toString().trim()
 
 module.exports = async (
   {src, dest, pipeline, packages, template},
@@ -14,28 +11,32 @@ module.exports = async (
         type: 'text',
         name: 'description',
         message: 'Project description',
-        initial: 'my awesome project',
+        initial: 'My awesome project',
       },
       {
         type: 'multiselect',
         name: 'devDeps',
         message: 'Choose dev dependencies',
         choices: [
-          {title: 'XO', value: 'xo', selected: false},
-          {title: 'Jest', value: 'jest', selected: false},
+          {
+            title: 'recommended (Prettier/ESLint)',
+            value: 'recommended',
+            selected: false,
+          },
+          {title: 'jest (Testing)', value: 'jest', selected: false},
         ],
       },
     ],
     {onCancel: process.exit}
   )
 
-  const useXO = devDeps.includes('xo')
+  const useRecommended = devDeps.includes('recommended')
   const useJest = devDeps.includes('jest')
   const username = sh('git config user.name')
 
   await pipeline(
-    src(['template/**', !useJest && '!**/test/**'].filter(n => n)),
-    packages(pkg => {
+    src(['template/**', !useJest && '!**/test/**'].filter((n) => n)),
+    packages((pkg) => {
       pkg.files = ['lib']
 
       if (useJest) {
@@ -47,19 +48,15 @@ module.exports = async (
           'test:watch': 'jest --watch --notify',
         }
       }
-      if (useXO) {
-        pkg = {
-          ...pkg,
-          scripts: {
-            ...pkg.scripts,
-            prepare: useJest ? ['xo', pkg.scripts.prepare].join(' && ') : 'xo',
-            lint: 'xo',
-          },
-          xo: {
-            ...(useJest && {envs: ['node', 'jest']}),
-            space: true,
-            prettier: true,
-          },
+      if (useRecommended) {
+        pkg.scripts = {
+          ...pkg.scripts,
+          prepare: [
+            'npm run lint',
+            ...[useJest ? pkg.scripts.prepare : []],
+          ].join(' && '),
+          lint: 'recommended',
+          'lint:fix': 'recommended --fix',
         }
       }
       return {
