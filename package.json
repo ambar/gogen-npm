@@ -1,6 +1,6 @@
 {
   "name": "gogen-npm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A Node package generator",
   "repository": "ambar/gogen-npm",
   "license": "MIT",
