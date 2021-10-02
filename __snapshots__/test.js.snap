@@ -2,6 +2,7 @@
 
 exports[`template creates with defaults 1`] = `
 Array [
+  ".eslintrc.js",
   ".gitignore",
   ".prettierrc.js",
   "LICENSE",
@@ -42,7 +43,7 @@ Object {
 }
 `;
 
-exports[`template creates with xo & jest 1`] = `
+exports[`template creates with recommended & jest 1`] = `
 Object {
   "description": "superb",
   "files": Array [
@@ -62,7 +63,7 @@ Object {
 }
 `;
 
-exports[`template creates with xo 1`] = `
+exports[`template creates with recommended 1`] = `
 Object {
   "description": "superb",
   "files": Array [
@@ -73,7 +74,7 @@ Object {
   "scripts": Object {
     "lint": "recommended",
     "lint:fix": "recommended --fix",
-    "prepare": "xo",
+    "prepare": "npm run lint && ",
   },
   "version": "0.0.0",
 }

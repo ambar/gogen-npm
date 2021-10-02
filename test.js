@@ -25,21 +25,21 @@ describe('template', () => {
     expect(JSON.parse(readFile('package.json'))).toMatchSnapshot()
   })
 
-  it('creates with xo', async () => {
+  it('creates with recommended', async () => {
     const {readFile} = await mock('.', directory, {
       answers: {
         ...answers,
-        devDeps: ['xo'],
+        devDeps: ['recommended'],
       },
     })
     expect(JSON.parse(readFile('package.json'))).toMatchSnapshot()
   })
 
-  it('creates with xo & jest', async () => {
+  it('creates with recommended & jest', async () => {
     const {readFile} = await mock('.', directory, {
       answers: {
         ...answers,
-        devDeps: ['xo', 'jest'],
+        devDeps: ['recommended', 'jest'],
       },
     })
     expect(JSON.parse(readFile('package.json'))).toMatchSnapshot()
